@@ -13,13 +13,13 @@ class PostController extends Controller
             $post = new Post();
             $post->user_id = auth()->user()->id;
             $post->title = $request->title;
-            $post->description = $request->description;
+            $post->description = $request->description; 
             $post->save();
 
             session()->flash('success', 'Post created successfully!');
 
         } catch (\Exception $e) {
-            
+
             session()->flash('error', 'Failed to create post.');
 
         }
