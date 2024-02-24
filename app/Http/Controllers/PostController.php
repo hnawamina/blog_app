@@ -9,10 +9,21 @@ class PostController extends Controller
 {
     public function store(Request $request)
     {
-        Post::create([
-            'user_id' => auth()->user()->id,
-            'title' => $request->title,
-            'description' => $request->description
-        ]);
+        try {
+            $post = new Post();
+            $post->user_id = auth()->user()->id;
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->save();
+
+            session()->flash('success', 'Post created successfully!');
+
+        } catch (\Exception $e) {
+            
+            session()->flash('error', 'Failed to create post.');
+
+        }
+
+        return redirect()->back();
     }
 }
